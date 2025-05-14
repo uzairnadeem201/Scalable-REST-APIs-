@@ -1,10 +1,11 @@
 'use strict';
+const project = require('./project');
 const {
   Model, Sequelize
 } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/database');
-module.exports = sequelize.define('user', {
+const user = sequelize.define('user', {
   id: {
   allowNull: false,
   autoIncrement: true,
@@ -56,3 +57,6 @@ deletedAt: {
   modelName: 'user',
 }
 );
+user.hasMany(project,{foreignKey: 'createdBy'});
+project.belongsTo(user,{foreignKey: 'createdBy'});
+module.exports = user;
